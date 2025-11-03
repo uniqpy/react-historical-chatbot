@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Link, Outlet } from 'react-router-dom';
+import ChatFullPage from './pages/ChatFullPage.jsx';
+import AboutDocs from './pages/AboutDocs.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+// Simple top-left links (no header component)
+function TopLinks() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container py-2">
+      <div className="d-flex align-items-center gap-3">
+        <Link to="/" className="text-decoration-none fw-semibold">Historical Chatbot</Link>
+        <Link to="/about" className="text-decoration-none text-secondary">About</Link>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+function Layout() {
+  return (
+    <>
+      <TopLinks />
+      <Outlet />
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<ChatFullPage />} />
+        <Route path="about" element={<AboutDocs />} />
+      </Route>
+    </Routes>
+  );
+}
