@@ -1,4 +1,4 @@
-// ESM Express server that returns MOCK Lincoln-style replies.
+// ESM Express server that returns MOCK Caligula-style replies.
 // No OpenAI key required. No external calls.
 
 import express from 'express';
@@ -42,8 +42,8 @@ app.get('/api/debug/env', (req, res) => {
 });
 
 // --- Mock generator ---
-// Returns a Lincoln-flavored response with light variation and a nod to the user's last line.
-function makeLincolnMockReply(userText = '') {
+// Returns a Caligula-flavored response with light variation and a nod to the user's last line.
+function makeCaligulaMockReply(userText = '') {
   const trims = String(userText || '').trim();
   const fragments = [
     "My friend,",
@@ -87,7 +87,7 @@ app.post('/api/chat', async (req, res) => {
       .reverse()
       .find((m) => (m?.role === 'user') && typeof m?.text === 'string');
 
-    const reply = makeLincolnMockReply(lastUser?.text || '');
+    const reply = makeCaligulaMockReply(lastUser?.text || '');
 
     // Simulate latency (feel like a real model)
     await new Promise((r) => setTimeout(r, 350));

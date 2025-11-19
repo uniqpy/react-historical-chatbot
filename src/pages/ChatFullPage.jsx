@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import feather from 'feather-icons';
 
 export default function ChatFullPage() {
-  // I keep messages locally; server replies as Lincoln via /api/chat.
+  // I keep messages locally; server replies as Caligula via /api/chat.
   const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Hello. I am configured to respond as Abraham Lincoln.' }
+    { role: 'bot', text: 'Hello. I am configured to respond as Emperor Caligula.' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -86,7 +86,7 @@ export default function ChatFullPage() {
                   </div>
                 </div>
               ))}
-              {loading && <div className="text-muted small">Lincoln is thinking…</div>}
+              {loading && <div className="text-muted small">Caligula is thinking…</div>}
             </div>
           </div>
 
@@ -99,7 +99,7 @@ export default function ChatFullPage() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Ask Abraham Lincoln anything…"
+                      placeholder="Ask Emperor Caligula anything…"
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       disabled={loading}

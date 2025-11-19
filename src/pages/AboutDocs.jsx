@@ -5,7 +5,7 @@ const CONTENT = {
   overview: {
     title: 'About',
     body: `
-This project is a Vite + React (JavaScript) frontend styled with Bootstrap. I maintain a full-page chat UI alongside a docs-style About section. During development, the backend runs as a local Express server. For now it returns mock Abraham Lincoln responses so I can iterate on the interface without requiring a paid API key. When I am ready, I can switch the backend to call the real OpenAI API.
+This project is a Vite + React (JavaScript) frontend styled with Bootstrap. I maintain a full-page chat UI alongside a docs-style About section. During development, the backend runs as a local Express server. For now it returns mock Emperor Caligula responses so I can iterate on the interface without requiring a paid API key. When I am ready, I can switch the backend to call the real OpenAI API.
 `
   },
 
@@ -30,7 +30,7 @@ Structure
     body: `
 Development Server
 - Express (Node.js) runs locally.
-- The server currently returns mock Abraham Lincoln-style replies.
+- The server currently returns mock Emperor Caligula-style replies.
 - When real OpenAI calls are enabled, the same /api/chat route proxies to the OpenAI API.
 
 Routes
@@ -123,7 +123,7 @@ Health Checks
 - Backend debug:   http://localhost:5174/api/debug/env -> mock mode returns openaiKeyPresent: false
 
 Behavior
-- The chat page sends messages to /api/chat and receives mock Abraham Lincoln-style responses.
+- The chat page sends messages to /api/chat and receives mock Emperor Caligula-style responses.
 `
   },
   dev_env: {
