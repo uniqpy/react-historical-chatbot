@@ -86,7 +86,7 @@ export default function ChatFullPage() {
                   </div>
                 </div>
               ))}
-              {loading && <div className="text-muted small">Caligula is thinking…</div>}
+              {loading && <div className="d-inline-block bg-white border rounded p-2 text-muted smallcmt-2 shadow-sm">Caligula is thinking…</div>}
             </div>
           </div>
 
