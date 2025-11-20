@@ -1,5 +1,5 @@
 html, body, #root { height: 100%; }
-body { background-color: #f8f9fa; }
+body { background-image: url("/src/assets/marble-bg.jpg") ; }
 
 /* Rotate utility for Feather chevrons */
 .rotate-90 { transform: rotate(90deg); }
