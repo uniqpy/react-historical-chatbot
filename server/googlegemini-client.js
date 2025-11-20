@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { GoogleGenAI } from "@google/genai";
 
 
-const ai = new GoogleGenAI({apiKey:'AIzaSyBJqlx4kIwNtgvWpy6Ps65MuX1q_j18ZRw'}); //evil api key...
+const ai = new GoogleGenAI({apiKey:''}); //evil api key...
 
 //what needs to be done
 // send gemini output to index.js
