@@ -1,4 +1,4 @@
-// ESM Express server that returns MOCK Caligula-style replies.
+// ESM Express server that returns MOCK Lincoln-style replies.
 // No OpenAI key required. No external calls.
 
 import express from 'express';
@@ -46,11 +46,11 @@ app.get('/api/debug/env', (req, res) => {
 function makeCaligulaMockReply(userText = '') {
   const trims = String(userText || '').trim();
   const fragments = [
-    "My friend,",
-    "If I may speak plainly,",
-    "Permit me to observe,",
-    "In truth,",
-    "I would submit,"
+    "Friends,",
+    "Romans,",
+    "Countrymen,",
+    "Pares,",
+    "My loyal subjects,"
   ];
   const closers = [
     "Let us proceed with firmness and good sense.",
