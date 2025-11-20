@@ -1,10 +1,10 @@
-// ESM Express server that returns MOCK Lincoln-style replies.
-// No OpenAI key required. No external calls.
+// ESM Express server that returns Caligula style responses from a gemini model.
 
 import express from 'express';
 import cors from 'cors';
 import crypto from 'crypto';
 import morgan from 'morgan';
+import {sendUserMessagetoGemini} from './googlegemini-client.js';
 
 // Minimal structured logs
 function logInfo(msg, meta = {}) {
@@ -37,43 +37,10 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 // Health/debug
 app.get('/api/health', (req, res) => res.json({ ok: true, cid: req.correlationId }));
 app.get('/api/debug/env', (req, res) => {
-  // For mocks, there is no key. Keep endpoint for parity.
-  res.json({ openaiKeyPresent: false, cid: req.correlationId });
+  res.json({ GeminiKeyPresent: false, cid: req.correlationId });
 });
 
-// --- Mock generator ---
-// Returns a Caligula-flavored response with light variation and a nod to the user's last line.
-function makeCaligulaMockReply(userText = '') {
-  const trims = String(userText || '').trim();
-  const fragments = [
-    "Friends,",
-    "Romans,",
-    "Countrymen,",
-    "Pares,",
-    "My loyal subjects,"
-  ];
-  const closers = [
-    "Let us proceed with firmness and good sense.",
-    "May reason and charity guide us.",
-    "I trust this helps to steady our course.",
-    "That is my humble judgment.",
-    "Let us act with both prudence and resolve."
-  ];
-  const picks = (arr) => arr[Math.floor(Math.random() * arr.length)];
-  const echo = trims ? ` You write: “${trims.slice(0, 140)}${trims.length > 140 ? '…' : ''}”` : '';
-
-  return [
-    picks(fragments),
-    " I aim to answer in a spirit of clarity and union.",
-    echo,
-    " In the matters before us, weigh facts carefully, avoid haste, and keep faith with first principles.",
-    " Where doubt persists, test your assumptions against experience and honest accounting.",
-    " ",
-    picks(closers)
-  ].join('');
-}
-
-// Chat route — returns a mock reply after a short delay to feel realistic
+// Chat route
 app.post('/api/chat', async (req, res) => {
   const cid = req.correlationId;
   try {
@@ -87,12 +54,12 @@ app.post('/api/chat', async (req, res) => {
       .reverse()
       .find((m) => (m?.role === 'user') && typeof m?.text === 'string');
 
-    const reply = makeCaligulaMockReply(lastUser?.text || '');
+    console.log(lastUser);
 
-    // Simulate latency (feel like a real model)
-    await new Promise((r) => setTimeout(r, 350));
+    const AIresponse = sendUserMessagetoGemini(lastUser);
+    console.log(AIresponse)
 
-    res.json({ success: true, reply, cid });
+    res.json({ success: true, AIresponse, cid });
   } catch (err) {
     logError('mock_chat_failed', { cid, message: err?.message });
     res.status(500).json({ success: false, error: 'server_error', cid });
@@ -107,3 +74,10 @@ const server = app.listen(port, () => {
 server.on('error', (err) => {
   logError('listen_error', { message: err?.message, code: err?.code, port });
 });
+
+
+
+
+//issues to fix so far
+//when caligula gets his message, all he sees is object,object??
+//when caligula sends his message, the gui would of already sent its blank message before it can recieve the response
