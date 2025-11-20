@@ -7,7 +7,7 @@ import HelpPage from './pages/HelpPage.jsx';
 function TopLinks() {
   return (
     <div className="container py-2">
-      <div className="d-flex align-items-center gap-3">
+      <div className="bg-white p-3 rounded shadow-sm d-inline-flex align-items-center gap-3">
         <Link to="/" className="text-decoration-none fw-semibold">Historical Chatbot</Link>
         <Link to="/about" className="text-decoration-none text-secondary">About</Link>
         <Link to="/help" className="text-decoration-none text-secondary">Help</Link>
