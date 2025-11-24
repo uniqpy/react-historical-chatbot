@@ -73,6 +73,7 @@ export default function ChatFullPage() {
           <div
             ref={listRef}
             className="flex-grow-1 overflow-auto px-3 py-4"
+            style={{ maxHeight: "550px" }}
             aria-live="polite"
             aria-label="Chat messages"
           >
@@ -116,7 +117,6 @@ export default function ChatFullPage() {
                   </form>
                 </div>
               </div>
-              <div className=" d-inline-block bg-white border rounded p-2 text-muted small mt-2 shadow-sm">Front-end calls /api/chat; the server talks to OpenAI.</div>
             </div>
           </div>
         </div>
