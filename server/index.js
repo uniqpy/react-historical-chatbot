@@ -56,10 +56,9 @@ app.post('/api/chat', async (req, res) => {
 
     console.log(lastUser);
 
-    const AIresponse = sendUserMessagetoGemini(lastUser);
+    const AIresponse = await sendUserMessagetoGemini(lastUser.text);
     console.log(AIresponse)
-
-    res.json({ success: true, AIresponse, cid });
+    res.json({ success: true, reply: AIresponse, cid });
   } catch (err) {
     logError('mock_chat_failed', { cid, message: err?.message });
     res.status(500).json({ success: false, error: 'server_error', cid });
@@ -75,9 +74,3 @@ server.on('error', (err) => {
   logError('listen_error', { message: err?.message, code: err?.code, port });
 });
 
-
-
-
-//issues to fix so far
-//when caligula gets his message, all he sees is object,object??
-//when caligula sends his message, the gui would of already sent its blank message before it can recieve the response
