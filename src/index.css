@@ -1,4 +1,6 @@
-html, body, #root { height: 100%; }
+html, body, #root { 
+  overflow: hidden;
+  height: 100%; }
 body { background-image: url("/src/assets/marble-bg.jpg") ; }
 
 /* Rotate utility for Feather chevrons */
