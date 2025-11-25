@@ -56,7 +56,7 @@ app.post('/api/chat', async (req, res) => {
 
     console.log(lastUser);
 
-    const AIresponse = await sendUserMessagetoGemini(lastUser.text);
+    const AIresponse = await sendUserMessagetoGemini(lastUser.text,"caligula"); //user input then which roman figure user wants to talk to
     console.log(AIresponse)
     res.json({ success: true, reply: AIresponse, cid });
   } catch (err) {
