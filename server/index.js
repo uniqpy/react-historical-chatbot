@@ -4,7 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import crypto from 'crypto';
 import morgan from 'morgan';
-import {sendUserMessagetoGemini} from './googlegemini-client.js';
+import {sendUserMessagetoGemini,checkGeminiresponse} from './googlegemini-client.js';
 
 // Minimal structured logs
 function logInfo(msg, meta = {}) {
@@ -54,9 +54,20 @@ app.post('/api/chat', async (req, res) => {
       .reverse()
       .find((m) => (m?.role === 'user') && typeof m?.text === 'string');
 
-    console.log(lastUser);
+    //need to add a checker here to sanitize user input? 
 
-    const AIresponse = await sendUserMessagetoGemini(messages,"caligula"); //user input then which roman figure user wants to talk to
+    
+
+
+
+    const preCheckedAIresponse = await sendUserMessagetoGemini(messages,"caligula"); //user input then which roman figure user wants to talk to
+
+    //before sending output to the front end, we need to perform a check on the answer generated...
+  
+    const AIresponse = await checkGeminiresponse(preCheckedAIresponse);
+
+    //now we peformed all checks, we can send GenAI output to user...
+
     console.log(AIresponse)
     res.json({ success: true, reply: AIresponse, cid });
   } catch (err) {
