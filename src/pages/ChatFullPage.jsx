@@ -24,6 +24,9 @@ export default function ChatFullPage() {
     setLoading(true);
 
     try {
+      //perform user verification
+      
+      
       // I map local history to API format (assistant/user).
       const payload = {
         messages: messages

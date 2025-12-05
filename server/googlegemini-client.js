@@ -52,3 +52,5 @@ export async function checkGeminiresponse(GeminiResponse) {
     console.log("modified message = ",response.text);
     return response.text;
 }
+
+

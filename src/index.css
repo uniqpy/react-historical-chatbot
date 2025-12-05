@@ -1,7 +1,9 @@
 html, body, #root { 
   overflow: hidden;
   height: 100%; }
-body { background-image: url("/src/assets/marble-bg.jpg") ; }
+body { background-image: url("/src/assets/background.png");
+       background-repeat: no-repeat;
+       background-size: cover; }
 
 /* Rotate utility for Feather chevrons */
 .rotate-90 { transform: rotate(90deg); }

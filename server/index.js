@@ -59,7 +59,6 @@ app.post('/api/chat', async (req, res) => {
     
 
 
-
     const preCheckedAIresponse = await sendUserMessagetoGemini(messages,"caligula"); //user input then which roman figure user wants to talk to
 
     //before sending output to the front end, we need to perform a check on the answer generated...
