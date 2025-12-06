@@ -77,7 +77,10 @@ export default function ChatFullPage() {
           <div
             ref={listRef}
             className="flex-grow-1 overflow-auto px-3 py-4 no-scrollbar"
-            style={{ maxHeight: "550px" }}
+            style={{ maxHeight: "550px", 
+              scrollbarWidth: "none",  
+              msOverflowStyle: "none" 
+            }}
             aria-live="polite"
             aria-label="Chat messages"
           >
