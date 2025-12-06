@@ -73,14 +73,10 @@ export default function ChatFullPage() {
     <div className="container-fluid d-flex flex-column vh-100">
       <div className="row flex-grow-1">
         <div className="col-12 d-flex flex-column">
-          <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
           <div
             ref={listRef}
-            className="flex-grow-1 overflow-auto px-3 py-4 no-scrollbar"
-            style={{ maxHeight: "550px", 
-              scrollbarWidth: "none",  
-              msOverflowStyle: "none" 
-            }}
+            className="flex-grow-1 overflow-auto px-3 py-4"
+            style={{ maxHeight: "43.5em"}}
             aria-live="polite"
             aria-label="Chat messages"
           >
@@ -89,6 +85,11 @@ export default function ChatFullPage() {
                 <div key={i} className={`mb-3 ${m.role === 'user' ? 'text-end' : ''}`}>
                   <div
                     className={`d-inline-block px-3 py-2 ${m.role === 'user' ? 'bg-dark text-white' : 'bg-primary text-white'} rounded-3`}
+                    style={{ 
+                      maxWidth: '70%',
+                      wordWrap: 'break-word',
+                      overflowWrap: 'break-word',
+                    }}
                   >
                     {m.text}
                   </div>  
