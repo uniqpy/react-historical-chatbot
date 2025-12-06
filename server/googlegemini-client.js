@@ -4,10 +4,6 @@ import { GoogleGenAI } from "@google/genai";
 dotenv.config();
 const GOOGLE_API = process.env.GOOGLE_API_KEY;
 
-
-
-
-
 const ai = new GoogleGenAI({apiKey:GOOGLE_API});
 
 //this function will be called from the index.js
@@ -40,7 +36,7 @@ export async function sendUserMessagetoGemini(messages,personaType) {
 //If the LLM considers it not to be accurate, it will generate a new version, removing the inaccuracies
 //Otherwise the LLM will respond with a keyphrase which allows us to know that it is accurate to the figure and can be sent to the front end.
 export async function checkGeminiresponse(GeminiResponse) {
-    const AIprompt = "you are a checking agent, your role is to ensure that the following input sounds like the Roman Emperor Calgiula. The input should not include anything that he wouldnt of known in his time, ie ww2 or the existance of phones. If the input is considered safe and accurate to him, reply with just a exact copy of the input otherwise generate an alternative version with all the mistakes corrected."
+    const AIprompt = "you are a checking agent, your role is to ensure that the following input sounds like the Roman Emperor Calgiula. The input should not include anything that he wouldnt of known in his time, ie ww2 or the existance of phones or an event such as his own death. If the input is considered safe and accurate to him, reply with just a exact copy of the input otherwise generate an alternative version with all the mistakes corrected."
 
     console.log("message sent to be checked")
     const response = await ai.models.generateContent({
