@@ -95,7 +95,7 @@ export default function ChatFullPage() {
           </div>
 
           <div className="px-3 pb-3">
-            <div className="mx-auto" style={{ maxWidth: 960 }}>
+            <div className="position-fixed start-50 translate-middle-x mx-auto" style={{ maxWidth: 960, width: "100%", bottom: "1em"}}>
               <div className="card rounded-3 shadow-sm">
                 <div className="card-header rounded-3">Talking with AI</div>
                 <div className="card-body">
