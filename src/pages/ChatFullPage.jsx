@@ -73,9 +73,10 @@ export default function ChatFullPage() {
     <div className="container-fluid d-flex flex-column vh-100">
       <div className="row flex-grow-1">
         <div className="col-12 d-flex flex-column">
+          <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
           <div
             ref={listRef}
-            className="flex-grow-1 overflow-auto px-3 py-4"
+            className="flex-grow-1 overflow-auto px-3 py-4 no-scrollbar"
             style={{ maxHeight: "550px" }}
             aria-live="polite"
             aria-label="Chat messages"
@@ -87,7 +88,7 @@ export default function ChatFullPage() {
                     className={`d-inline-block px-3 py-2 ${m.role === 'user' ? 'bg-dark text-white' : 'bg-primary text-white'} rounded-3`}
                   >
                     {m.text}
-                  </div>
+                  </div>  
                 </div>
               ))}
               {loading && <div className="d-inline-block bg-white border rounded p-2 text-muted smallcmt-2 shadow-sm">Caligula is thinking…</div>}
