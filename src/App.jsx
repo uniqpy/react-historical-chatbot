@@ -3,7 +3,11 @@ import ChatFullPage from './pages/ChatFullPage.jsx';
 import AboutDocs from './pages/AboutDocs.jsx';
 import HelpPage from './pages/HelpPage.jsx';
 
-// Simple top-left links (no header component)
+/**
+ * This function shows the links to the other pages on the top of the page. 
+ * Links to the jsx pages, so when clicked on the by the user it makes the page change.
+ * @returns
+ */
 function TopLinks() {
   return (
     <div className="container py-2">
@@ -25,6 +29,11 @@ function Layout() {
   );
 }
 
+/**
+ * Routes for the different parts of the site. When the page is initally loaded, it will load onto the chat page. If the user clicks on one of the links to other pages on the top of the page
+ * this will load the specified page.
+ * @returns
+ */
 export default function App() {
   return (
     <Routes>

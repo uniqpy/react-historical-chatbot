@@ -40,7 +40,11 @@ app.get('/api/debug/env', (req, res) => {
   res.json({ GeminiKeyPresent: false, cid: req.correlationId });
 });
 
-// Chat route
+/**
+ * This route handles when the user on the frontend sends a message to the backend, using a try catch
+ * The input is used to generate the Gemini response, this response is then sent back to gemini for verification. It is then packed into a JSON format so it can be sent back to the frontend to be displayed
+ * If it fails at any point, it will instead return an error message to the front end. 
+ */
 app.post('/api/chat', async (req, res) => {
   const cid = req.correlationId;
   try {
@@ -54,19 +58,13 @@ app.post('/api/chat', async (req, res) => {
       .reverse()
       .find((m) => (m?.role === 'user') && typeof m?.text === 'string');
 
-    //need to add a checker here to sanitize user input? 
-
-    
-
-
+      //sends user input to AI
     const preCheckedAIresponse = await sendUserMessagetoGemini(messages,"caligula"); //user input then which roman figure user wants to talk to
 
     //before sending output to the front end, we need to perform a check on the answer generated...
-  
     const AIresponse = await checkGeminiresponse(preCheckedAIresponse);
 
     //now we peformed all checks, we can send GenAI output to user...
-
     console.log(AIresponse)
     res.json({ success: true, reply: AIresponse, cid });
   } catch (err) {

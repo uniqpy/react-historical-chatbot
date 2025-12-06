@@ -6,8 +6,16 @@ const GOOGLE_API = process.env.GOOGLE_API_KEY;
 
 const ai = new GoogleGenAI({apiKey:GOOGLE_API});
 
-//this function will be called from the index.js
-//This function generates a Gemini response in the tone of the chosen histroical figure to the users input.
+/**
+ * 
+ * @param {*} messages 
+ * @param {*} personaType 
+ * @returns response.txt
+ * 
+ * This function calls the Google Gemini API to generate a response based on the user input.
+ * It is given a primer prompt, explaining it is to behave like caligula and give it constraints. 
+ * The generate response is then returned. 
+ */
 export async function sendUserMessagetoGemini(messages,personaType) {
 
     const aiPersona = {
@@ -31,10 +39,13 @@ export async function sendUserMessagetoGemini(messages,personaType) {
 }
 
 
-//This function will be called from index.js
-//This functions purpose is to ensure that the inital response that has been made by Gemini is considered accurate to what is needed.
-//If the LLM considers it not to be accurate, it will generate a new version, removing the inaccuracies
-//Otherwise the LLM will respond with a keyphrase which allows us to know that it is accurate to the figure and can be sent to the front end.
+/**
+* This function does an API call to Gemini.
+* @param {*} messages 
+* @returns response.txt
+* It takes the inital generate response from the user input as its input, checking against rules to ensure it meets expectations (behaving like caligula and not mentioning anything he would know)
+* It returns either an unmodified or a modified response which is then returned to its call in index.js to be displayed to user.
+ */
 export async function checkGeminiresponse(GeminiResponse) {
     const AIprompt = "you are a checking agent, your role is to ensure that the following input sounds like the Roman Emperor Calgiula. The input should not include anything that he wouldnt of known in his time, ie ww2 or the existance of phones or an event such as his own death. If the input is considered safe and accurate to him, reply with just a exact copy of the input otherwise generate an alternative version with all the mistakes corrected."
 
@@ -48,5 +59,4 @@ export async function checkGeminiresponse(GeminiResponse) {
     console.log("modified message = ",response.text);
     return response.text;
 }
-
 
