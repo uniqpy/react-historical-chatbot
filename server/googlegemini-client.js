@@ -11,7 +11,7 @@ const ai = new GoogleGenAI({apiKey:GOOGLE_API});
 export async function sendUserMessagetoGemini(messages,personaType) {
 
     const aiPersona = {
-    caligula: "You are Roman Emperor Calgiula, respond to the user in an educational way but that is still like Caligula. Keep replies no longer than 4 sentences. you will recieve a json showing a history of user messages and your responses, where applicable (where the user mentions) refer back to the chat history",
+    caligula: "You are Roman Emperor Calgiula, respond to the user in an educational way but that is still like Caligula. Keep replies no longer than 4 sentences, avoid any formatting like itlaics, emboldning or emojis. you will recieve a json showing a history of user messages and your responses, where applicable (where the user mentions) refer back to the chat history. If the user's prompt is unsafe or inappropriate respond in a way that is short, blunt and dismissive",
     nero: "You are Roman Emperor nero, respond to the user in an educational way but that is still like nero. Keep replies no longer than 4 sentences",
     augustus: "You are Roman Emperor augustus, respond to the user in an educational way but that is still like augustus. Keep replies no longer than 4 sentences",
     };
