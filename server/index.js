@@ -73,6 +73,11 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+//used to for frontend to check if back end is online
+app.post("/api/checker", async (req,res) => {
+  return res.json({ success: true, cid});
+});
+
 // Start server
 const port = Number(process.env.PORT || 5174);
 const server = app.listen(port, () => {

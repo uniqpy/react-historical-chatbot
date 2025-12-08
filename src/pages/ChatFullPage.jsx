@@ -4,7 +4,7 @@ import feather from 'feather-icons';
 export default function ChatFullPage() {
   // I keep messages locally; server replies as Caligula via /api/chat.
   const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Hello. I am configured to respond as Emperor Caligula.' }
+    { role: 'bot', text: 'Hello. I am Emperor Caligula. What would you want to ask his divinity?' }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -123,13 +123,13 @@ export default function ChatFullPage() {
       >
         <div className="mx-auto w-100" style={{ maxWidth: 960 }}>
           <div className="card rounded-3 shadow-sm">
-            <div className="card-header rounded-3">Talking with AI</div>
+            <div className="card-header rounded-3">Talking with Caligula</div>
             <div className="card-body">
               <form onSubmit={onSubmit} className="d-flex gap-2">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Ask Emperor Caligula anything…"
+                  placeholder="Send message to Caligula"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   disabled={loading}
