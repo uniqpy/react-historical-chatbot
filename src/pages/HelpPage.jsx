@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import feather from 'feather-icons';
 
+/**
+ * This function creates the content for the help page. The class names are a result of the use of the bootstrap library. 
+ * The help page will provide information on the chatbot and solutions to any common issues. Otherwise it will provide a contact address for further support.
+ * @returns 
+ */
+
 export default function HelpPage(){
     const [topic] = useState('Help');
 
@@ -36,12 +42,12 @@ const CONTENT = {
         title: 'Need help?',
         body: `
 Here are some fixes that should fix any issues you may have
--etc
--etc
--etc
+-If you get an error about input length being too large, try sending a message with fewer characters.
+-Use simple characters, things like emoji's are not supported. 
+-The bot is not able to respond with styling (making messages bold or in italitcs)
+-The replies can take a while to generate, so please be patient. 
 
-
-If these don't work, contact us at help@caligulalovesyou.net
+If these tips don't work, can't find the solution to your problem or want to send feedback email us at: caligulasupport@caligula.net
         `
     }
 }
