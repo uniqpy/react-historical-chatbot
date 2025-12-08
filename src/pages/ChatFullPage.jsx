@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import feather from 'feather-icons';
 
 export default function ChatFullPage() {
@@ -9,6 +9,21 @@ export default function ChatFullPage() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const listRef = useRef(null);
+  const footerRef = useRef(null);
+  const [footerHeight, setFooterHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    if (!footerRef.current) return;
+    const update = () => footerRef.current && setFooterHeight(footerRef.current.offsetHeight);
+    const resizeObserver = new ResizeObserver(update);
+    resizeObserver.observe(footerRef.current);
+    window.addEventListener('resize', update);
+    update();
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, []);
 
   function addMessage(role, text) {
     setMessages(prev => [...prev, { role, text }]);
@@ -70,61 +85,65 @@ export default function ChatFullPage() {
   useEffect(() => { feather.replace(); }, []);
 
   return (
-    <div className="container-fluid d-flex flex-column vh-100">
-      <div className="row flex-grow-1">
-        <div className="col-12 d-flex flex-column">
-          <div
-            ref={listRef}
-            className="flex-grow-1 overflow-auto px-3 py-4"
-            style={{ maxHeight: "43.5em"}}
-            aria-live="polite"
-            aria-label="Chat messages"
-          >
-            <div className="mx-auto" style={{ maxWidth: 960 }}>
-              {messages.map((m, i) => (
-                <div key={i} className={`mb-3 ${m.role === 'user' ? 'text-end' : ''}`}>
-                  <div
-                    className={`d-inline-block px-3 py-2 ${m.role === 'user' ? 'bg-dark text-white' : 'bg-primary text-white'} rounded-3`}
-                    style={{ 
-                      maxWidth: '70%',
-                      wordWrap: 'break-word',
-                      overflowWrap: 'break-word',
-                    }}
-                  >
-                    {m.text}
-                  </div>  
-                </div>
-              ))}
-              {loading && <div className="d-inline-block bg-white border rounded p-2 text-muted smallcmt-2 shadow-sm">Caligula is thinking…</div>}
+    <div className="container-fluid h-100 d-flex flex-column position-relative">
+      <div
+        ref={listRef}
+        className="flex-grow-1 overflow-auto px-3 pt-4"
+        style={{
+          minHeight: 0,
+          paddingBottom: (footerHeight || 0) + 16,
+          scrollPaddingBottom: (footerHeight || 0) + 16
+        }}
+        aria-live="polite"
+        aria-label="Chat messages"
+      >
+        <div className="mx-auto" style={{ maxWidth: 960 }}>
+          {messages.map((m, i) => (
+            <div key={i} className={`mb-3 ${m.role === 'user' ? 'text-end' : ''}`}>
+              <div
+                className={`d-inline-block px-3 py-2 ${m.role === 'user' ? 'bg-dark text-white' : 'bg-primary text-white'} rounded-3`}
+                style={{ 
+                  maxWidth: '70%',
+                  wordWrap: 'break-word',
+                  overflowWrap: 'break-word',
+                }}
+              >
+                {m.text}
+              </div>  
             </div>
-          </div>
+          ))}
+          {loading && <div className="d-inline-block bg-white border rounded p-2 text-muted small mt-2 shadow-sm">Caligula is thinking…</div>}
+        </div>
+      </div>
 
-          <div className="px-3 pb-3">
-            <div className="position-fixed start-50 translate-middle-x mx-auto" style={{ maxWidth: 960, width: "100%", bottom: "1em"}}>
-              <div className="card rounded-3 shadow-sm">
-                <div className="card-header rounded-3">Talking with AI</div>
-                <div className="card-body">
-                  <form onSubmit={onSubmit} className="d-flex gap-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Ask Emperor Caligula anything…"
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      disabled={loading}
-                    />
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      aria-label="Send message"
-                      title="Send"
-                      disabled={loading}
-                    >
-                      <i data-feather="send"></i>
-                    </button>
-                  </form>
-                </div>
-              </div>
+      <div
+        ref={footerRef}
+        className="px-3 pb-3 position-absolute start-0 end-0"
+        style={{ bottom: 0, zIndex: 2 }}
+      >
+        <div className="mx-auto w-100" style={{ maxWidth: 960 }}>
+          <div className="card rounded-3 shadow-sm">
+            <div className="card-header rounded-3">Talking with AI</div>
+            <div className="card-body">
+              <form onSubmit={onSubmit} className="d-flex gap-2">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Ask Emperor Caligula anything…"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  disabled={loading}
+                />
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  aria-label="Send message"
+                  title="Send"
+                  disabled={loading}
+                >
+                  <i data-feather="send"></i>
+                </button>
+              </form>
             </div>
           </div>
         </div>

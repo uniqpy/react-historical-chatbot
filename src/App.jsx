@@ -22,10 +22,12 @@ function TopLinks() {
 
 function Layout() {
   return (
-    <>
+    <div className="d-flex flex-column h-100">
       <TopLinks />
-      <Outlet />
-    </>
+      <div className="flex-grow-1 d-flex flex-column overflow-hidden" style={{ minHeight: 0 }}>
+        <Outlet />
+      </div>
+    </div>
   );
 }
 
