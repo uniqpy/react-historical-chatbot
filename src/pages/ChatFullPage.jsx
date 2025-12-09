@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import feather from 'feather-icons';
+import "./ChatPage.css"
 
 export default function ChatFullPage() {
   // I keep messages locally; server replies as Caligula via /api/chat.
@@ -11,6 +12,7 @@ export default function ChatFullPage() {
   const listRef = useRef(null);
   const footerRef = useRef(null);
   const [footerHeight, setFooterHeight] = useState(0);
+  const [clicked, setClicked] = useState(false);
 
   useLayoutEffect(() => {
     if (!footerRef.current) return;
@@ -28,6 +30,16 @@ export default function ChatFullPage() {
   function addMessage(role, text) {
     setMessages(prev => [...prev, { role, text }]);
   }
+
+  const handleCLick = () => {
+    if (!loading) {
+      setClicked(true);
+      
+      setTimeout(() => {
+        setClicked(false);
+      },500)
+    }
+  };
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -145,10 +157,11 @@ export default function ChatFullPage() {
                 />
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className={`btn btn-primary ${clicked ? "btn-clicked" : ""}`}
                   aria-label="Send message"
                   title="Send"
                   disabled={loading}
+                  onClick = {handleCLick}
                 >
                   <i data-feather="send"></i>
                 </button>

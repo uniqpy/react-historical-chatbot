@@ -1,5 +1,5 @@
 .btn-clicked {
-  animation: click-animation 0.3s ease-out;
+  animation: click-animation 0.2s ease-out;
 }
 
 @keyframes click-animation {
@@ -7,7 +7,7 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.1); /* Button grows slightly */
+    transform: scale(0.8); /* Button grows slightly */
   }
   100% {
     transform: scale(1); /* Returns to normal size */
