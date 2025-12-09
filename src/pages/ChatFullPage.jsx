@@ -99,10 +99,17 @@ export default function ChatFullPage() {
       >
         <div className="chat-feed mx-auto" style={{ maxWidth: 960 }}>
           {messages.map((m, i) => (
-            <div key={i} className={`mb-3 message-row ${m.role === 'user' ? 'user' : 'bot'}`}>
-              <div className={`bubble ${m.role === 'user' ? 'user' : 'bot'}`}>
+            <div key={i} className={`mb-3 message-row ${m.role}`}>
+              {m.role === 'bot' && (
+                <img
+                  src="src\assets\caligulapfp.jpg"
+                  alt="Caligula"
+                  className="chat-avatar"
+                />
+              )}
+              <div className={`bubble ${m.role}`}>
                 {m.text}
-              </div>  
+              </div>
             </div>
           ))}
           {loading && <div className="d-inline-block bg-white border rounded p-2 text-muted small mt-2 shadow-sm">Caligula is thinking…</div>}
