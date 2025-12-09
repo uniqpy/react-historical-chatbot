@@ -24,16 +24,19 @@ export async function sendUserMessagetoGemini(messages,personaType) {
     augustus: "You are Roman Emperor augustus, respond to the user in an educational way but that is still like augustus. Keep replies no longer than 4 sentences",
     };
 
-
     console.log("message sent to caligula!!")
     console.log(messages)
+
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash-lite",
-        config: {
-            systemInstruction: aiPersona[personaType]
-        },
-        contents: messages,
+    model: "gemma-3-27b-it",
+    contents: [
+    {
+      role: "user",
+      text: aiPersona[personaType] + "\n\nHere is the chat history:\n" + JSON.stringify(messages)
+    }
+    ]
     });
+
     console.log("pre modified response = ",response.text);
     return response.text;
 }
@@ -46,17 +49,20 @@ export async function sendUserMessagetoGemini(messages,personaType) {
 * It takes the inital generate response from the user input as its input, checking against rules to ensure it meets expectations (behaving like caligula and not mentioning anything he would know)
 * It returns either an unmodified or a modified response which is then returned to its call in index.js to be displayed to user.
  */
+
 export async function checkGeminiresponse(GeminiResponse) {
-    const AIprompt = "you are a checking agent, your role is to ensure that the following input sounds like the Roman Emperor Calgiula. The input should not include anything that he wouldnt of known in his time, ie ww2 or the existance of phones or an event such as his own death. If the input is considered safe and accurate to him, reply with just a exact copy of the input otherwise generate an alternative version with all the mistakes corrected."
+  const checkerPrompt = `
+You ensure the following text sounds like Roman Emperor Caligula. Avoid any formatting like itlaics, emboldning or emojis. It must not mention anything he could not know: modern events, technology, or his death. If correct, return an exact copy. If incorrect, return a corrected version.
 
-    console.log("message sent to be checked")
-    const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash-lite",
-        config:{systemInstruction:AIprompt},
-        contents: GeminiResponse,
-    });
+Text to check:
+${GeminiResponse}
+`
 
-    console.log("modified message = ",response.text);
-    return response.text;
+  const response = await ai.models.generateContent({
+    model: "gemma-3-27b-it",
+    contents: [{ role: "user", text: checkerPrompt }]
+  })
+
+  return response.text
 }
 
