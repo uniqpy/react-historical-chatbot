@@ -112,7 +112,16 @@ export default function ChatFullPage() {
               </div>
             </div>
           ))}
-          {loading && <div className="d-inline-block bg-white border rounded p-2 text-muted small mt-2 shadow-sm">Caligula is thinking…</div>}
+          {loading && (
+            <div className="message-row bot">
+              <img
+                src="src/assets/caligulapfp.jpg"
+                alt="Caligula"
+                className="chat-avatar"
+              />
+            <div className="bubble bot thinking">Caligula is thinking…</div>
+          </div>
+        )}
         </div>
       </div>
 
