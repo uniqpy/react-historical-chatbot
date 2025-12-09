@@ -14,7 +14,7 @@ const ai = new GoogleGenAI({apiKey:GOOGLE_API});
  * 
  * This function calls the Google Gemini API to generate a response based on the user input.
  * It is given a primer prompt, explaining it is to behave like caligula and give it constraints. 
- * The generate response is then returned. 
+ * The generate response is then returned.
  */
 export async function sendUserMessagetoGemini(messages,personaType) {
 
@@ -28,7 +28,7 @@ export async function sendUserMessagetoGemini(messages,personaType) {
     console.log("message sent to caligula!!")
     console.log(messages)
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.5-flash-lite",
         config: {
             systemInstruction: aiPersona[personaType]
         },
@@ -51,7 +51,7 @@ export async function checkGeminiresponse(GeminiResponse) {
 
     console.log("message sent to be checked")
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.5-flash-lite",
         config:{systemInstruction:AIprompt},
         contents: GeminiResponse,
     });
