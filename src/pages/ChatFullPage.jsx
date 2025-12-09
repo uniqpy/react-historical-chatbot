@@ -88,7 +88,7 @@ export default function ChatFullPage() {
     <div className="container-fluid h-100 d-flex flex-column position-relative">
       <div
         ref={listRef}
-        className="flex-grow-1 overflow-auto px-3 pt-4"
+        className="flex-grow-1 overflow-auto px-3 pt-4 chat-window"
         style={{
           minHeight: 0,
           paddingBottom: (footerHeight || 0) + 16,
@@ -97,17 +97,10 @@ export default function ChatFullPage() {
         aria-live="polite"
         aria-label="Chat messages"
       >
-        <div className="mx-auto" style={{ maxWidth: 960 }}>
+        <div className="chat-feed mx-auto" style={{ maxWidth: 960 }}>
           {messages.map((m, i) => (
-            <div key={i} className={`mb-3 ${m.role === 'user' ? 'text-end' : ''}`}>
-              <div
-                className={`d-inline-block px-3 py-2 ${m.role === 'user' ? 'bg-dark text-white' : 'bg-primary text-white'} rounded-3`}
-                style={{ 
-                  maxWidth: '70%',
-                  wordWrap: 'break-word',
-                  overflowWrap: 'break-word',
-                }}
-              >
+            <div key={i} className={`mb-3 message-row ${m.role === 'user' ? 'user' : 'bot'}`}>
+              <div className={`bubble ${m.role === 'user' ? 'user' : 'bot'}`}>
                 {m.text}
               </div>  
             </div>

@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cormorant+Garamond:wght@500;600&display=swap');
+
 html, body, #root { 
   overflow: hidden;
   height: 100%;
 }
 body {
-  background-color: #f2f2f2;
+  background: #f2f2f2 url("/src/assets/Background.jpg") center center / cover no-repeat fixed;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1f1b16;
 }
 
 /* Rotate utility for Feather chevrons */
@@ -20,4 +24,63 @@ body {
 .h-flex .card.h-100,
 .h-flex .flex-grow-1 {
   min-height: 0;
+}
+
+.chat-window {
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+.chat-feed {
+  padding-left: clamp(12px, 2vw, 28px);
+  padding-right: clamp(12px, 2vw, 28px);
+  padding-top: clamp(16px, 2vw, 28px);
+}
+
+.message-row {
+  display: flex;
+  width: 100%;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.bubble {
+  max-width: 70%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  padding: 12px 14px;
+  border-radius: 14px;
+  line-height: 1.5;
+  font-size: 1rem;
+  border: 1px solid transparent;
+}
+
+.bubble.bot {
+  background: linear-gradient(180deg, #e9d5af 0%, #d6bc90 100%);
+  border-color: #b68a43;
+  color: #170d06;
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-weight: 600;
+  font-variant: small-caps;
+  letter-spacing: 0.45px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.bubble.user {
+  background: linear-gradient(135deg, #6e1e1e 0%, #3d0f12 100%);
+  color: #fdf7ec;
+  border-color: #d4b06a;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  box-shadow: 0 10px 24px rgba(61, 15, 18, 0.35);
+  letter-spacing: 0.2px;
+}
+
+.chat-meta {
+  color: #6d6255;
+  font-size: 0.9rem;
 }
