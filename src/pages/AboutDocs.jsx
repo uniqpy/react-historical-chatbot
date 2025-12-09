@@ -5,7 +5,7 @@ const CONTENT = {
   overview: {
     title: 'About',
     body: `
-This project is a Vite + React (JavaScript) frontend styled with Bootstrap. I maintain a full-page chat UI alongside a docs-style About section. During development, the backend runs as a local Express server. For now it returns mock Emperor Caligula responses so I can iterate on the interface without requiring a paid API key. When I am ready, I can switch the backend to call the real OpenAI API.
+Roman-themed chat that mimics a ChatGPT layout. Short prompts are handled by a local JSON-driven reply engine with weighted responses; longer/complex prompts fall through to Gemini for generation plus a secondary safety/voice check. Frontend is React + Vite; backend is Express. Styling uses custom CSS and Google Fonts to give Caligula a classic feel.
 `
   },
 
@@ -15,14 +15,15 @@ This project is a Vite + React (JavaScript) frontend styled with Bootstrap. I ma
     body: `
 Stack
 - React + Vite (JavaScript).
-- Bootstrap 5 for layout and components.
-- Feather icons for inline icons.
+- Bootstrap 5 base grid; custom CSS for Roman styling and chat bubbles.
+- Feather icons for inline icons; Google Fonts (Inter + Cormorant Garamond).
 - React Router for routing.
 
 Structure
-- The chat page uses a full-height layout with a bottom input card.
-- The About page uses a two-column layout: a left tree navigation and a right document pane.
-- The Vite dev proxy maps /api/* calls to the backend server to avoid CORS during development.
+- Chat page: full-height feed with themed user/bot bubbles; bottom input card.
+- About page: two-column docs style with left nav and right content pane.
+- Global background image set via CSS; chat window is transparent over it.
+- Vite dev proxy maps /api/* calls to backend to avoid CORS in dev.
 `
   },
   infra_be: {
@@ -30,15 +31,14 @@ Structure
     body: `
 Development Server
 - Express (Node.js) runs locally.
-- The server currently returns mock Emperor Caligula-style replies.
-- When real OpenAI calls are enabled, the same /api/chat route proxies to the OpenAI API.
+- /api/chat pipeline: local JSON responder first; if no match, call Gemini to generate, then Gemini again to verify tone/safety.
 
 Routes
 - GET /api/health: health check.
 - POST /api/chat: chat endpoint consumed by the frontend.
 
 Security
-- I keep API keys and any other secrets on the server only. The client never holds secrets.
+- API keys and any secrets live only on the server (.env). The client never holds secrets.
 `
   },
   infra_db: {
@@ -48,9 +48,9 @@ Current State
 - No database is required for the mock-only setup.
 
 Future
-- If I extend the app, I can add a MariaDB-backed Express service using the official MariaDB or mysql2 driver.
-- I will keep connection strings in server/.env and never expose them to the client.
-- I will use prepared statements and a minimal DAO layer to keep things safe and testable.
+- If extended, can add MariaDB/MySQL via mysql2 with pooled connections.
+- Keep connection strings in server/.env and never expose them to the client.
+- Use prepared statements and a minimal DAO layer to keep things safe and testable.
 `
   },
   infra_api: {
@@ -60,23 +60,25 @@ Local API
 - Provided by the Express server under /api/*.
 - Vite proxy forwards frontend requests to the Express server to avoid CORS during development.
 
-OpenAI (Optional)
-- When I switch from mock to real, the backend will call the OpenAI API from the server only.
-- This requires a paid API key stored in server/.env.
+Contract
+- POST /api/chat expects: { messages: [{ role: "user"|"assistant", text: string }] }
+- Response: { success: boolean, reply?: string, source?: "local"|"gemini", cid: string }
+- GET /api/health and /api/debug/env for quick diagnostics.
 `
   },
 
   // ===== GPT & Billing =====
   gpt_billing: {
-    title: 'GPT & Billing (Notes)',
+    title: 'Local Engine & Gemini Notes',
     body: `
-The OpenAI API does not provide a free developer tier. A paid API key is required to call models such as gpt-4o-mini. I default to a mock backend so I can build and refine the interface without cost.
+Local JSON Engine
+- server/local-responses.json defines patterns (triggers, max words, weighted responses).
+- server/local-engine.js matches short/simple prompts and returns a weighted random reply to reduce Gemini calls.
 
-Steps to enable real API later
-1) Add a payment method on the OpenAI platform.
-2) Create a project and API key.
-3) Add OPENAI_API_KEY=sk-... to server/.env and restart the server.
-4) Replace the mock /api/chat handler with the real OpenAI call.
+Gemini Usage
+- If no local match, server/googlegemini-client.js calls Gemini (generateContent) with the Caligula system prompt.
+- A second Gemini call checks tone/safety before replying.
+- Requires GOOGLE_API_KEY in server/.env; billable per Gemini pricing.
 `
   },
 
@@ -94,11 +96,11 @@ Install (project root)
 Additional Packages
 - npm i feather-icons
 - npm i express cors morgan dotenv
-- For real OpenAI integration later: npm i openai
+- Gemini client: npm i @google/genai
 
 Layout
 - src/              React + Vite frontend
-- server/           Express backend (mock by default)
+- server/           Express backend (Gemini + local engine)
 - vite.config.js    Dev proxy for /api
 - package.json
 - server/.env       Backend secrets when using real APIs
@@ -108,8 +110,8 @@ Layout
     title: 'Development • Running Locally',
     body: `
 Backend (Mock Mode)
-- node server/index.js
-- Expect a log line indicating the server is listening, default port 5174, mode: mock.
+node server/index.js
+- Logs show port and correlation IDs per request.
 
 Proxy
 - vite.config.js maps "/api" to "http://localhost:5174".
@@ -120,21 +122,22 @@ Frontend
 
 Health Checks
 - Backend health:  http://localhost:5174/api/health  -> { ok: true }
-- Backend debug:   http://localhost:5174/api/debug/env -> mock mode returns openaiKeyPresent: false
+- Backend debug:   http://localhost:5174/api/debug/env -> shows whether Gemini key is present
 
 Behavior
-- The chat page sends messages to /api/chat and receives mock Emperor Caligula-style responses.
+- The chat page posts messages to /api/chat.
+- Short/simple inputs return local JSON responses; others go through Gemini generate + verify.
 `
   },
   dev_env: {
     title: 'Development • Environment & Secrets',
     body: `
 Mock Mode
-- No secrets required. The server does not call external APIs.
+- No secrets required for local-only replies.
 
-Real OpenAI Mode
+Gemini Mode
 - Create server/.env with:
-  OPENAI_API_KEY=sk-... (paid key)
+  GOOGLE_API_KEY=...
   PORT=5174
 - Restart the backend after editing .env.
 
