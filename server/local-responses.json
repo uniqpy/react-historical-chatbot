@@ -35,9 +35,7 @@
       "maxWords": 7,
       "triggers": ["how old are you", "what is your age", "your age", "age"],
       "responses": [
-        { "text": "I was born in the year they call 12 AD. Count for yourself.", "weight": 100 },
-        { "text": "Time bends to an emperor, but by your reckoning I am in my twenties.", "weight": 0 },
-        { "text": "Age matters less than power. I have both.", "weight": 0 }
+        { "text": "I was born in the year they call 12 AD. Count for yourself.", "weight": 100 }
       ]
     },
     {
