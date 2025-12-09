@@ -5,6 +5,7 @@ import cors from 'cors';
 import crypto from 'crypto';
 import morgan from 'morgan';
 import {sendUserMessagetoGemini,checkGeminiresponse} from './googlegemini-client.js';
+import { getLocalReply } from './local-engine.js';
 
 // Minimal structured logs
 function logInfo(msg, meta = {}) {
@@ -58,6 +59,17 @@ app.post('/api/chat', async (req, res) => {
       .reverse()
       .find((m) => (m?.role === 'user') && typeof m?.text === 'string');
 
+    if (!lastUser) {
+      return res.status(400).json({ success: false, error: 'no_user_message', cid });
+    }
+
+    // Try light-weight scripted reply first to avoid overusing Gemini for simple inputs.
+    const localReply = getLocalReply(lastUser.text);
+    if (localReply?.text) {
+      logInfo('local_reply', { cid, source: localReply.source });
+      return res.json({ success: true, reply: localReply.text, cid, source: 'local' });
+    }
+
       //sends user input to AI
     const preCheckedAIresponse = await sendUserMessagetoGemini(messages,"caligula"); //user input then which roman figure user wants to talk to
 
@@ -86,4 +98,3 @@ const server = app.listen(port, () => {
 server.on('error', (err) => {
   logError('listen_error', { message: err?.message, code: err?.code, port });
 });
-

@@ -1,0 +1,54 @@
+{
+  "patterns": [
+    {
+      "id": "greeting",
+      "maxWords": 4,
+      "triggers": ["hello", "hi", "hey", "greetings", "salve"],
+      "responses": [
+        { "text": "Greetings, citizen. Speak your mind.", "weight": 45 },
+        { "text": "You stand before Caligula. What is it you want?", "weight": 30 },
+        { "text": "State your business; Rome does not wait.", "weight": 25 }
+      ]
+    },
+    {
+      "id": "how_are_you",
+      "maxWords": 6,
+      "triggers": ["how are you", "how are you doing", "how do you feel", "how's it going"],
+      "responses": [
+        { "text": "I am as well as an emperor should be. Why do you ask?", "weight": 40 },
+        { "text": "My mood shifts like the Tiber, but I remain in command.", "weight": 35 },
+        { "text": "Concern for my health? Focus instead on your question.", "weight": 25 }
+      ]
+    },
+    {
+      "id": "thanks",
+      "maxWords": 6,
+      "triggers": ["thanks", "thank you", "cheers"],
+      "responses": [
+        { "text": "Gratitude noted. Rome expects loyalty.", "weight": 45 },
+        { "text": "Do not linger on courtesy; make use of my time.", "weight": 30 },
+        { "text": "Very well. Now, what else do you seek?", "weight": 25 }
+      ]
+    },
+    {
+      "id": "age",
+      "maxWords": 7,
+      "triggers": ["how old are you", "what is your age", "your age", "age"],
+      "responses": [
+        { "text": "I was born in the year they call 12 AD. Count for yourself.", "weight": 40 },
+        { "text": "Time bends to an emperor, but by your reckoning I am in my twenties.", "weight": 35 },
+        { "text": "Age matters less than power. I have both.", "weight": 25 }
+      ]
+    },
+    {
+      "id": "name",
+      "maxWords": 9,
+      "triggers": ["what is your name", "what's your name", "who are you", "full name", "name"],
+      "responses": [
+        { "text": "I am Gaius Julius Caesar Augustus Germanicus, though Rome calls me Caligula.", "weight": 45 },
+        { "text": "Name me as the legions do: Caligula, emperor of Rome.", "weight": 30 },
+        { "text": "Gaius Julius Caesar Augustus Germanicus—remember it when you speak.", "weight": 25 }
+      ]
+    }
+  ]
+}

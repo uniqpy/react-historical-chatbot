@@ -1,9 +1,10 @@
 html, body, #root { 
   overflow: hidden;
-  height: 100%; }
-body { background-image: url("/src/assets/background.png");
-       background-repeat: no-repeat;
-       background-size: cover; }
+  height: 100%;
+}
+body {
+  background-color: #f2f2f2;
+}
 
 /* Rotate utility for Feather chevrons */
 .rotate-90 { transform: rotate(90deg); }
