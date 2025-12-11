@@ -1,5 +1,3 @@
-// ESM Express server that returns Caligula style responses from a gemini model.
-
 import express from 'express';
 import cors from 'cors';
 import crypto from 'crypto';
@@ -42,7 +40,8 @@ app.get('/api/debug/env', (req, res) => {
 });
 
 /**
- * This route handles when the user on the frontend sends a message to the backend, using a try catch
+ * @async
+ * @description This route handles when the user on the frontend sends a message to the backend, using a try catch
  * The input is used to generate the Gemini response, this response is then sent back to gemini for verification. It is then packed into a JSON format so it can be sent back to the frontend to be displayed
  * If it fails at any point, it will instead return an error message to the front end. 
  */

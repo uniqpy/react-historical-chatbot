@@ -2,8 +2,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import feather from 'feather-icons';
 import "./ChatPage.css"
 
+/**
+ * @func 
+ * @description renders the chatpage and defines any jsx it needs
+ * @returns 
+ */
 export default function ChatFullPage() {
-  // I keep messages locally; server replies as Caligula via /api/chat.
+  //messages are kept locally; server replies as Caligula via /api/chat.
   const [messages, setMessages] = useState([
     { role: 'bot', text: 'Hello. I am Emperor Caligula. What would you want to ask his divinity?' }
   ]);
@@ -27,10 +32,17 @@ export default function ChatFullPage() {
     };
   }, []);
 
+  /**
+   * @func
+   * @param {*} role 
+   * @param {*} text 
+   * @description takes the new message inputted either from user or backend and adds it to the chat history
+   */
   function addMessage(role, text) {
     setMessages(prev => [...prev, { role, text }]);
   }
 
+  //used for the button animation, so we know to trigger it based on if the value is true. 
   const handleCLick = () => {
     if (!loading) {
       setClicked(true);
@@ -41,6 +53,14 @@ export default function ChatFullPage() {
     }
   };
 
+  /**
+   * @func
+   * @async
+   * @param {*} e 
+   * @description Handles when a user sends a message into the chat, sending the message to the backend and handling the response from it.
+   * Handles errors and making sure it renders to the chatpage. 
+   * @returns 
+   */
   async function onSubmit(e) {
     e.preventDefault();
     const trimmed = input.trim();
@@ -50,11 +70,8 @@ export default function ChatFullPage() {
     setInput('');
     setLoading(true);
 
-    try {
-      //perform user verification
-      
-      
-      // I map local history to API format (assistant/user).
+    try { 
+      //map local history to API format (assistant/user).
       const payload = {
         messages: messages
           .filter(m => m.role === 'user' || m.role === 'bot')
@@ -96,6 +113,7 @@ export default function ChatFullPage() {
 
   useEffect(() => { feather.replace(); }, []);
 
+  //html/jsx needed to render chatpage with use of bootstrap (thus strange classNames)
   return (
     <div className="container-fluid h-100 d-flex flex-column position-relative">
       <div

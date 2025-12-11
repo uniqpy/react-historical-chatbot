@@ -5,7 +5,7 @@ const CONTENT = {
   overview: {
     title: 'About',
     body: `
-Roman-themed chat that mimics a ChatGPT layout. Short prompts are handled by a local JSON-driven reply engine with weighted responses; longer/complex prompts fall through to Gemini for generation plus a secondary safety/voice check. Frontend is React + Vite; backend is Express. Styling uses custom CSS and Google Fonts to give Caligula a classic feel.
+Roman-themed chat that mimics a Chatbot layout. Short prompts are handled by a local JSON-driven reply engine with weighted responses; longer/complex prompts fall through to Gemini for generation plus a secondary check. Frontend is React + Vite; backend is Express. Styling uses custom CSS and Google Fonts to give the page a classic/roman feel.
 `
   },
 
@@ -31,7 +31,7 @@ Structure
     body: `
 Development Server
 - Express (Node.js) runs locally.
-- /api/chat pipeline: local JSON responder first; if no match, call Gemini to generate, then Gemini again to verify tone/safety.
+- /api/chat pipeline: local JSON responder first; if no match, call Gemini to generate, then Gemini again to verify it fits expectations of caligula.
 
 Routes
 - GET /api/health: health check.
@@ -77,7 +77,7 @@ Local JSON Engine
 
 Gemini Usage
 - If no local match, server/googlegemini-client.js calls Gemini (generateContent) with the Caligula system prompt.
-- A second Gemini call checks tone/safety before replying.
+- A second Gemini call checks tone before replying.
 - Requires GOOGLE_API_KEY in server/.env; billable per Gemini pricing.
 `
   },
@@ -100,7 +100,7 @@ Additional Packages
 
 Layout
 - src/              React + Vite frontend
-- server/           Express backend (Gemini + local engine)
+- server/           Express backend (Gemini + local JSON engine)
 - vite.config.js    Dev proxy for /api
 - package.json
 - server/.env       Backend secrets when using real APIs
@@ -142,14 +142,19 @@ Gemini Mode
 - Restart the backend after editing .env.
 
 Client-Side Rules
-- I never place secrets in the frontend. All protected calls go through the Express backend.
+- Secrets are not put in the frontend. All protected calls go through the Express backend.
 
 MariaDB (Optional)
-- If I add MariaDB later, I will store DB credentials in server/.env, use a connection pool, and rely on prepared statements only on the server.
+- If MariaDB was added later, We will store DB credentials in server/.env, use a connection pool, and rely on prepared statements only on the server.
 `
   }
 };
 
+/**
+ * @func
+ * @description This specifies what will be rendered onto the about page, specifying formatting with use of bootstrap
+ * It allows for switching of what content is rendered based on what section is selected when the user clicks on a list item.
+ */
 export default function AboutDocs() {
   const [topic, setTopic] = useState('overview');
   const [infraOpen, setInfraOpen] = useState(true);

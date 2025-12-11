@@ -7,7 +7,9 @@ import { useRef, useEffect } from "react";
 
 
 /**
- * This function shows the links to the other pages on the top of the page. 
+ * @func
+ * @description
+ * This function shows the links to the about page and shows the help modal button on the top of the page. Rendered seperately to the main page content
  * Links to the jsx pages, so when clicked on the by the user it makes the page change.
  * @returns
  */
@@ -15,6 +17,7 @@ function TopLinks() {
   const modalRef = useRef(null);
   const bsModal = useRef(null);
 
+// pop up bootstrap modal, which displays help information to user, uses this effect to keep track if the modla is being shown currently or not
   useEffect(() => {
     bsModal.current = new Modal(modalRef.current, {
       backdrop: "static",
@@ -29,9 +32,7 @@ function TopLinks() {
   const closeModal = () => {
     bsModal.current.hide();
   };
-
-
-
+//bootstrap html/jsx needed to render the modal
   return (
     <div className="container py-2">
       <div className="bg-white p-3 rounded shadow-sm d-inline-flex align-items-center gap-3">
@@ -68,6 +69,11 @@ function TopLinks() {
   );
 }
 
+/**
+ * @func 
+ * @description Rendering of the top bar which shows links. 
+ * @returns 
+ */
 function Layout() {
   return (
     <div className="d-flex flex-column h-100">
@@ -80,7 +86,8 @@ function Layout() {
 }
 
 /**
- * Routes for the different parts of the site. When the page is initally loaded, it will load onto the chat page. If the user clicks on one of the links to other pages on the top of the page
+ * @func
+ * @description Routes for the different parts of the site. When the page is initally loaded, it will load onto the chat page. If the user clicks on one of the links to other pages on the top of the page
  * this will load the specified page.
  * @returns
  */

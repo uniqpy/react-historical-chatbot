@@ -2,19 +2,44 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const responses = require('./local-responses.json');
 
+/**
+ * 
+ * @func escapeRegex
+ * @param {*} str 
+ * @returns {} str
+ * @description replaces specified characters with "\\$&"
+ */
 function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/**
+ * @func wordCount
+ * @param {*} text 
+ * @returns {string} text
+ */
 function wordCount(text) {
   return text.split(/\s+/).filter(Boolean).length;
 }
 
+/**
+ * @func matchesTrigger
+ * @param {*} text 
+ * @param {*} trigger 
+ * @returns {} pattern
+ * @description
+ */
 function matchesTrigger(text, trigger) {
   const pattern = new RegExp(`\\b${escapeRegex(trigger)}\\b`, 'i');
   return pattern.test(text);
 }
 
+/**
+ * @func weightedPick
+ * @param {*} options 
+ * @returns {} options
+ * @description in the json for the semantic based engine, this picks the set reply based on the weights 
+ */
 function weightedPick(options) {
   const total = options.reduce((sum, opt) => sum + (opt.weight || 1), 0);
   let roll = Math.random() * total;
@@ -27,7 +52,11 @@ function weightedPick(options) {
 
 /**
  * Returns a canned reply for short/simple user inputs.
+ * @func getLocalReply
  * @param {string} userText
+ * @returns {} text
+ * @returns {} source
+ * @description returns a reply based on pre-defined user input from a json 
  */
 export function getLocalReply(userText) {
   if (!userText || typeof userText !== 'string') return null;

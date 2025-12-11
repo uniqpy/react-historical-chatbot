@@ -9,6 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
 import App from './App.jsx';
 
+//order of rendering by react
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
