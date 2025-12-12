@@ -62,10 +62,12 @@ app.post('/api/chat', async (req, res) => {
       return res.status(400).json({ success: false, error: 'no_user_message', cid });
     }
 
-    // Try light-weight scripted reply first to avoid overusing Gemini for simple inputs.
+    // Try semantic based JSON engine reply first to see if we have applicable response before we try gemini api.
     const localReply = getLocalReply(lastUser.text);
     if (localReply?.text) {
       logInfo('local_reply', { cid, source: localReply.source });
+      //simulate latency
+      await new Promise((r) => setTimeout(r, 900));
       return res.json({ success: true, reply: localReply.text, cid, source: 'local' });
     }
 

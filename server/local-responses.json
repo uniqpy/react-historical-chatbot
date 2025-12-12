@@ -47,6 +47,24 @@
         { "text": "Name me as the legions do: Caligula, emperor of Rome.", "weight": 30 },
         { "text": "Gaius Julius Caesar Augustus Germanicus—remember it when you speak.", "weight": 25 }
       ]
+    },
+      {
+      "id": "born",
+      "maxWords": 9,
+      "triggers": ["when were you born", "birth place","where were you born"],
+      "responses": [
+        { "text": "I was born in the momentous year 12 AD, in the great coastal town Antium! Remember where I come from...", "weight": 45 },   
+        { "text": "The coastal town of Antium blessed Rome with a glorious leader in the year 12 AD!", "weight": 25 }
+      ]
+    },
+    {
+      "id": "language",
+      "maxWords": 9,
+      "triggers": ["why do you speak english", "why are you not typing in latin","why are you typing in english"],
+      "responses": [
+        { "text": "My conquests of Britannia means I have those who can decipher your backwards language!", "weight": 45 },   
+        { "text": "Your backwards language is useful in my conquests for when you surrender to Roman Might.", "weight": 25 }
+      ]
     }
   ]
 }
