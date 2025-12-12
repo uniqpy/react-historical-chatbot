@@ -67,8 +67,8 @@ Contract
 `
   },
 
-  // ===== GPT & Billing =====
-  gpt_billing: {
+  // ===== Gemini & Local JSON engine =====
+  engine_gemini: {
     title: 'Local Engine & Gemini Notes',
     body: `
 Local JSON Engine
@@ -223,12 +223,12 @@ export default function AboutDocs() {
                   </div>
                 </div>
 
-                {/* GPT & Billing */}
+                {/* engine_gemini */}
                 <button
-                  className={`btn btn-sm text-start rounded-3 ${topic === 'gpt_billing' ? 'btn-primary text-white' : 'btn-light'}`}
-                  onClick={() => setTopic('gpt_billing')}
+                  className={`btn btn-sm text-start rounded-3 ${topic === 'engine_gemini' ? 'btn-primary text-white' : 'btn-light'}`}
+                  onClick={() => setTopic('engine_gemini')}
                 >
-                  GPT & Billing
+                  Gemini and the Local JSON engine
                 </button>
 
                 {/* Development */}
