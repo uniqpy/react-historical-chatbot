@@ -172,6 +172,7 @@ export default function ChatFullPage() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   disabled={loading}
+                  aria-label='form'
                 />
                 <button
                   type="submit"
