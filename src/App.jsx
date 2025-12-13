@@ -37,8 +37,8 @@ function TopLinks() {
     <div className="container py-2">
       <div className="bg-white p-3 rounded shadow-sm d-inline-flex align-items-center gap-3">
         <Link to="/" className="text-decoration-none fw-semibold">Caligula Chatbot</Link>
-        <Link to="/about" className="text-decoration-none text-secondary">About</Link>
-        <button className="text-decoration-none text-secondary" onClick={openModal}>Help</button>
+        <Link to="/about" className="btn btn-link">About</Link>
+        <button className="btn btn-link" onClick={openModal}>Help</button>
          <div
         className="modal fade"
         tabIndex="-1"
