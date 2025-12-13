@@ -71,7 +71,7 @@
     {
     "id": "Geography",
     "maxWords": 14,
-    "triggers": ["rome geography", "roman empire", "your lands", "tell me about rome", "rome"],
+    "triggers": ["rome geography", "your lands"],
     "responses": [
       { "text": "Rome claws from seven hills, drinking the Tiber like warm blood.", "weight": 40 },
       { "text": "My dominion runs from Britain's fog to Syria's burning edge.", "weight": 35 },
