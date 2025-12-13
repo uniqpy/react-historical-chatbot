@@ -74,7 +74,7 @@
     "triggers": ["rome geography", "your lands"],
     "responses": [
       { "text": "Rome claws from seven hills, drinking the Tiber like warm blood.", "weight": 40 },
-      { "text": "My dominion runs from Britain's fog to Syria's burning edge.", "weight": 35 },
+      { "text": "My dominion runs from Britannia fog to Syria's burning edge.", "weight": 35 },
       { "text": "Seas, roads, and mountains obeyed me or learned to fear me.", "weight": 25 }
     ]
     },
