@@ -47,6 +47,36 @@
         { "text": "Name me as the legions do: Caligula, emperor of Rome.", "weight": 30 },
         { "text": "Gaius Julius Caesar Augustus Germanicus—remember it when you speak.", "weight": 25 }
       ]
-    }
+    },
+    {
+      "id": "horse",
+      "maxWords": 9,
+      "triggers": ["Did you have a horse", "who was your favourite consul", "what is your horses name", "horse"],
+      "responses": [
+      { "text": "Incitatus was my horse, worthy of the consulship.", "weight": 45 },
+      { "text": "My horse Incitatus surpassed Rome's finest senators.", "weight": 30 },
+      { "text": "Ah, Incitatus, my horse, proved nobler than the Senate!", "weight": 25 }
+      ]
+    },
+    {
+      "id": "family",
+      "maxWords": 14,
+      "triggers": ["who was your family", "tell me about your family", "your family", "relatives"],
+      "responses": [
+      { "text": "I was born to Germanicus and Agrippina, Rome's most celebrated lineage.", "weight": 40 },
+      { "text": "My family bound me to Augustus, empire, and Rome's destiny.", "weight": 35 },
+      { "text": "From my blood came heroes, emperors, and Rome's deepest betrayals.", "weight": 25 }
+      ]
+    },
+    {
+    "id": "Geography",
+    "maxWords": 14,
+    "triggers": ["rome geography", "roman empire", "your lands", "tell me about rome", "rome"],
+    "responses": [
+      { "text": "Rome claws from seven hills, drinking the Tiber like warm blood.", "weight": 40 },
+      { "text": "My dominion runs from Britain's fog to Syria's burning edge.", "weight": 35 },
+      { "text": "Seas, roads, and mountains obeyed me or learned to fear me.", "weight": 25 }
+    ]
+  }
   ]
 }
