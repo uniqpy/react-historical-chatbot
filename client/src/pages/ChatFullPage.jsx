@@ -78,7 +78,7 @@ export default function ChatFullPage() {
           .map(m => ({ role: m.role === 'bot' ? 'assistant' : 'user', text: m.text }))
           .concat([{ role: 'user', text: trimmed }])
       };
-
+      //sends message to express API
       const r = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -88,6 +88,7 @@ export default function ChatFullPage() {
       if (!r.ok) {
         const text = await r.text();
         console.error('API error:', r.status, text);
+        //handle possible errors that could occur from communication with the backend. 
         try {
           const parsed = JSON.parse(text);
           addMessage('bot', `API error (${parsed.status || r.status}). CID: ${parsed.cid || 'n/a'}`);
@@ -132,7 +133,7 @@ export default function ChatFullPage() {
             <div key={i} className={`mb-3 message-row ${m.role}`}>
               {m.role === 'bot' && (
                 <img
-                  src="src\assets\caligulapfp.jpg"
+                  src="client/src/assets/caligulapfp.jpg"
                   alt="Caligula"
                   className="chat-avatar"
                 />
@@ -145,7 +146,7 @@ export default function ChatFullPage() {
           {loading && (
             <div className="message-row bot">
               <img
-                src="src/assets/caligulapfp.jpg"
+                src="client/src/assets/caligulapfp.jpg"
                 alt="Caligula"
                 className="chat-avatar"
               />

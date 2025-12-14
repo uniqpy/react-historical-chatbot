@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import crypto from 'crypto';
 import morgan from 'morgan';
-import {sendUserMessagetoGemini,checkGeminiresponse} from './googlegemini-client.js';
+import {sendUserMessagetoGemini,checkGeminiresponse} from './googleAI-client.js';
 import { getLocalReply } from './local-engine.js';
 
 // Minimal structured logs
