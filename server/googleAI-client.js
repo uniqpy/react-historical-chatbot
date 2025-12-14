@@ -39,8 +39,7 @@ export async function sendUserMessagetoGemini(messages, personaType) {
     ],
   });
 
-  const text = await response.text();
-  return text;
+  return response.text || '';
 }
 
 /**
@@ -66,6 +65,5 @@ ${geminiResponse}
     contents: [{ role: 'user', text: checkerPrompt }],
   });
 
-  const text = await response.text();
-  return text;
+  return response.text || '';
 }
