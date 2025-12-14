@@ -1,12 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import feather from 'feather-icons';
-import "./ChatPage.css"
+import avatarImg from '../assets/caligulapfp.jpg';
+import './ChatPage.css';
 
-/**
- * @func 
- * @description renders the chatpage and defines any jsx it needs
- * @returns 
- */
 export default function ChatFullPage() {
   //messages are kept locally; server replies as Caligula via /api/chat.
   const [messages, setMessages] = useState([
@@ -32,13 +28,8 @@ export default function ChatFullPage() {
     };
   }, []);
 
-  /**
-   * @func
-   * @param {*} role 
-   * @param {*} text 
-   * @description takes the new message inputted either from user or backend and adds it to the chat history
-   */
   function addMessage(role, text) {
+    // Maintain chat history in order for rendering and API payloads.
     setMessages(prev => [...prev, { role, text }]);
   }
 
@@ -53,14 +44,6 @@ export default function ChatFullPage() {
     }
   };
 
-  /**
-   * @func
-   * @async
-   * @param {*} e 
-   * @description Handles when a user sends a message into the chat, sending the message to the backend and handling the response from it.
-   * Handles errors and making sure it renders to the chatpage. 
-   * @returns 
-   */
   async function onSubmit(e) {
     e.preventDefault();
     const trimmed = input.trim();
@@ -91,13 +74,19 @@ export default function ChatFullPage() {
         //handle possible errors that could occur from communication with the backend. 
         try {
           const parsed = JSON.parse(text);
-          addMessage('bot', `API error (${parsed.status || r.status}). CID: ${parsed.cid || 'n/a'}`);
+          const label = parsed.error || `API error (${parsed.status || r.status})`;
+          addMessage('bot', `${label}. Reference: ${parsed.cid || 'n/a'}`);
         } catch {
           addMessage('bot', `API error (${r.status}).`);
         }
       } else {
         const data = await r.json();
-        addMessage('bot', data.success ? data.reply : `Model not reachable. CID: ${data.cid || 'n/a'}`);
+        addMessage(
+          'bot',
+          data.success
+            ? data.reply
+            : `Model not reachable. Reference: ${data.cid || 'n/a'}`
+        );
       }
     } catch (e) {
       console.error('Network/JS error:', e);
@@ -133,7 +122,7 @@ export default function ChatFullPage() {
             <div key={i} className={`mb-3 message-row ${m.role}`}>
               {m.role === 'bot' && (
                 <img
-                  src="client/src/assets/caligulapfp.jpg"
+                  src={avatarImg}
                   alt="Caligula"
                   className="chat-avatar"
                 />
@@ -146,13 +135,13 @@ export default function ChatFullPage() {
           {loading && (
             <div className="message-row bot">
               <img
-                src="client/src/assets/caligulapfp.jpg"
+                src={avatarImg}
                 alt="Caligula"
                 className="chat-avatar"
               />
-            <div className="bubble bot scribing">Caligula is scribing...</div>
-          </div>
-        )}
+              <div className="bubble bot thinking">Caligula is thinking...</div>
+            </div>
+          )}
         </div>
       </div>
 

@@ -5,7 +5,7 @@ html, body, #root {
   height: 100%;
 }
 body {
-  background: #f2f2f2 url("client/src/assets/Background.jpg") center center / cover no-repeat fixed;
+  background: #f2f2f2 url("./assets/Background.jpg") center center / cover no-repeat fixed;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: #1f1b16;
 }

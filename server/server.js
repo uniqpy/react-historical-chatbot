@@ -1,8 +1,9 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import crypto from 'crypto';
 import morgan from 'morgan';
-import {sendUserMessagetoGemini,checkGeminiresponse} from './googleAI-client.js';
+import { sendUserMessagetoGemini, checkGeminiresponse } from './googleAI-client.js';
 import { getLocalReply } from './local-engine.js';
 
 // Minimal structured logs
@@ -16,6 +17,7 @@ function logError(msg, meta = {}) {
 logInfo('boot', { msg: 'starting mock server/index.js' });
 
 const app = express();
+const geminiConfigured = Boolean(process.env.GOOGLE_API_KEY);
 
 // Correlation ID per request
 app.use((req, res, next) => {
@@ -36,14 +38,16 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 // Health/debug
 app.get('/api/health', (req, res) => res.json({ ok: true, cid: req.correlationId }));
 app.get('/api/debug/env', (req, res) => {
-  res.json({ GeminiKeyPresent: false, cid: req.correlationId });
+  res.json({ GeminiKeyPresent: geminiConfigured, cid: req.correlationId });
 });
 
 /**
- * @async
- * @description This route handles when the user on the frontend sends a message to the backend, using a try catch
- * The input is used to generate the Gemini response, this response is then sent back to gemini for verification. It is then packed into a JSON format so it can be sent back to the frontend to be displayed
- * If it fails at any point, it will instead return an error message to the front end. 
+ * Handle chat messages from the client.
+ * Orders of work:
+ * 1. Validate payload shape.
+ * 2. Try local semantic replies for short prompts.
+ * 3. If Gemini is configured, generate then verify the reply.
+ * 4. Return clear errors without crashing the server.
  */
 app.post('/api/chat', async (req, res) => {
   const cid = req.correlationId;
@@ -71,8 +75,13 @@ app.post('/api/chat', async (req, res) => {
       return res.json({ success: true, reply: localReply.text, cid, source: 'local' });
     }
 
-      //sends user input to AI
-    const preCheckedAIresponse = await sendUserMessagetoGemini(messages,"caligula"); //user input then which roman figure user wants to talk to
+    if (!geminiConfigured) {
+      logError('gemini_not_configured', { cid });
+      return res.status(503).json({ success: false, error: 'model_not_configured', cid });
+    }
+
+    // sends user input to AI
+    const preCheckedAIresponse = await sendUserMessagetoGemini(messages, 'caligula'); // user input then which roman figure user wants to talk to
 
     //before sending output to the front end, we need to perform a check on the answer generated...
     const AIresponse = await checkGeminiresponse(preCheckedAIresponse);
@@ -86,9 +95,9 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-//used to for frontend to check if back end is online
+// used for frontend to check if back end is online
 app.post("/api/checker", async (req,res) => {
-  return res.json({ success: true, cid});
+  return res.json({ success: true, cid: req.correlationId });
 });
 
 // Start server
