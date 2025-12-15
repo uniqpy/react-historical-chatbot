@@ -139,7 +139,7 @@ export default function ChatFullPage() {
                 alt="Caligula"
                 className="chat-avatar"
               />
-              <div className="bubble bot thinking">Caligula is thinking...</div>
+              <div className="bubble bot thinking">Caligula is scribing...</div>
             </div>
           )}
         </div>
